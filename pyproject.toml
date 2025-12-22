@@ -33,7 +33,10 @@ dependencies = [
     "shapely",
     "ogbench",
     "torchcodec",
-    "minigrid"
+    "minigrid",
+    "pybullet",
+    "cvxpy",
+    "PyFlyt"
 ]
 
 dynamic = ["version"]
