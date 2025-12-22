@@ -172,7 +172,7 @@ def dataset_info(name):
     if name not in list_datasets():
         raise ValueError(f"Dataset '{name}' not found. Available: {list_datasets()}")
 
-    dataset = load_from_disk(str(Path(get_cache_dir(), name, "records")))
+    dataset = load_from_disk(str(Path(get_cache_dir(), name)))
 
     dataset.set_format("numpy")
 

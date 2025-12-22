@@ -411,6 +411,9 @@ class World:
                 goal_data = self.infos["goal"][i]
                 if goal_data.ndim > 3:
                     goal_data = goal_data[-1]
+                if frame.ndim > 3:
+                    frame = frame[0]
+                print(frame.shape, goal_data.shape)
                 frame = np.vstack([frame, goal_data])
             o.append_data(frame)
 
@@ -434,6 +437,8 @@ class World:
                     goal_data = self.infos["goal"][i]
                     if goal_data.ndim > 3:
                         goal_data = goal_data[-1]
+                    if frame.ndim > 3:
+                        frame = frame[0]
                     frame = np.vstack([frame, goal_data])
                 o.append_data(frame)
         [o.close() for o in out]

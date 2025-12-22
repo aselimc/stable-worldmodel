@@ -271,8 +271,9 @@ def display_world_info(info: dict[str, Any]) -> None:
             - 'variation': Variation space structure
 
     Example:
-        >>> from stable_worldmodel import data
-        >>> info = data.world_info("swm/SimplePointMaze-v0")
+        >>> from stable_worldmodel.data import utils
+        >>> from stable_worldmodel.cli import display_world_info
+        >>> info = utils.world_info("swm/SimplePointMaze-v0")
         >>> display_world_info(info)
     """
     root = Tree(Text(f"World: {info.get('name', '<unknown>')}", style="bold green"))
@@ -309,8 +310,9 @@ def display_dataset_info(info: dict[str, Any]) -> None:
             - 'variation': Variation space structure
 
     Example:
-        >>> from stable_worldmodel import data
-        >>> info = data.dataset_info("simple-pointmaze")
+        >>> from stable_worldmodel.data.utils import dataset_info
+        >>> from stable_worldmodel.cli import display_dataset_info
+        >>> info = dataset_info("simple-pointmaze")
         >>> display_dataset_info(info)
     """
     top_table = Table(
@@ -429,14 +431,14 @@ def list_cmd(
 
             $ swm list world
     """
-    cache_dir = data.get_cache_dir()
+    cache_dir = data.utils.get_cache_dir()
 
     if kind == "dataset":
-        cached_items = data.list_datasets()
+        cached_items = data.utils.list_datasets()
     elif kind == "model":
         cached_items = data.list_models()
     elif kind == "world":
-        cached_items = data.list_worlds()
+        cached_items = data.utils.list_worlds()
     else:
         print("[red]Invalid type: must be 'model', 'dataset' or 'world'[/red]")
         raise typer.Abort()
@@ -503,17 +505,17 @@ def show(
 
             $ swm show world swm/SimplePointMaze-v0
     """
-    cache_dir = data.get_cache_dir()
+    cache_dir = data.utils.get_cache_dir()
 
     if kind == "dataset":
-        cached_items = data.list_datasets()
+        cached_items = data.utils.list_datasets()
         items = names if not all else cached_items
-        info_fn = data.dataset_info
+        info_fn = data.utils.dataset_info
         display_fn = display_dataset_info
     elif kind == "world":
-        cached_items = data.list_worlds()
+        cached_items = data.utils.list_worlds()
         items = names if not all else cached_items
-        info_fn = data.world_info
+        info_fn = data.utils.world_info
         display_fn = display_world_info
     else:
         print("[red] Invalid type: must be 'world' or 'dataset' [/red]")
@@ -577,14 +579,14 @@ def delete(
         This operation permanently deletes data and cannot be undone. The command
         will prompt for confirmation before proceeding.
     """
-    cache_dir = data.get_cache_dir()
+    cache_dir = data.utils.get_cache_dir()
 
     if kind == "dataset":
-        cached_items = data.list_datasets()
-        deleter = data.delete_dataset
+        cached_items = data.utils.list_datasets()
+        deleter = data.utils.delete_dataset
     elif kind == "model":
         cached_items = data.list_models()
-        deleter = data.delete_model
+        deleter = data.utils.delete_model
     else:
         print("[red]Invalid type: must be 'model' or 'dataset'[/red]")
         raise typer.Abort()
